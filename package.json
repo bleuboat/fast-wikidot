@@ -2,26 +2,35 @@
   "name": "fastwd",
   "version": "0.1.0",
   "private": true,
+  "bin": {
+    "fastwd": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "commonjs",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "tsx watch ./src/index.tsx",
+    "start": "tsx ./src/index.tsx",
+    "build": "esbuild ./src/index.tsx --outfile=./dist/index.js --bundle --minify --platform=node --format=cjs",
+    "fmt": "oxfmt",
+    "lint": "oxlint"
   },
   "dependencies": {
-    "next": "16.4.0",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "@hono/node-server": "^2.1.5",
+    "hono": "^4.13.13",
+    "react": "^19",
+    "react-dom": "^19"
   },
   "devDependencies": {
-    "@tailwindcss/turbopack": "^4",
-    "@types/node": "^20",
+    "@types/node": "^26.6.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.4.0",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "esbuild": "^0.28.2",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.89.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7"
   },
   "packageManager": "pnpm@12.10.1"
 }
