@@ -4,12 +4,13 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "dev": "tsx watch ./src/index.tsx",
-    "build": "esbuild ./src/index.tsx --outfile=./dist/index.js --bundle --minify --platform=node --format=cjs",
-    "start": "node ./dist/index.js",
-    "fmt": "oxfmt src",
-    "lint": "oxlint",
-    "check": "tsc"
+    "dev": "tsx watch --env-file-if-exists=.env src/index.tsx",
+    "build": "tsx build.ts",
+    "start": "node --env-file-if-exists=.env dist/cli.cjs",
+    "format": "oxfmt src/ build.ts --write",
+    "lint": "oxlint --fix",
+    "typecheck": "tsc",
+    "fix": "pnpm format && pnpm lint && pnpm typecheck"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.5",
