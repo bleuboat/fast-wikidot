@@ -1,4 +1,4 @@
-body {
+const base = `body {
   margin: 0px;
   padding: 0px;
 }
@@ -3431,3 +3431,6 @@ table.guest-commenting td label.hint {
 }
 
 /* END of FileUploadModule.css fragment */
+` as string;
+
+export default base;

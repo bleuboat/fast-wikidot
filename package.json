@@ -2,31 +2,31 @@
   "name": "fast-wikidot",
   "version": "0.1.0",
   "private": true,
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "dev": "tsx watch --env-file-if-exists=.env src/index.tsx",
+    "dev": "tsx watch --env-file-if-exists=.env index.tsx",
     "build": "tsx build.ts",
-    "start": "node --env-file-if-exists=.env dist/cli.cjs",
-    "format": "oxfmt src/ build.ts --write",
+    "start": "./dist/bin/fastwd",
+    "format": "oxfmt",
     "lint": "oxlint --fix",
     "typecheck": "tsc",
     "fix": "pnpm format && pnpm lint && pnpm typecheck"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.5",
-    "hono": "^4.13.13",
-    "react": "^19",
-    "react-dom": "^19"
+    "hono": "^4.13.14",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@types/node": "^26.6.5",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "esbuild": "^0.28.2",
     "oxfmt": "^0.74.0",
-    "oxlint": "^1.89.0",
+    "oxlint": "^1.90.0",
     "tsx": "^4.23.15",
-    "typescript": "^7"
+    "typescript": "^7.0.2"
   },
   "packageManager": "pnpm@12.15.0"
 }
