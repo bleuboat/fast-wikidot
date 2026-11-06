@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development tsx watch src/index.tsx",
     "build": "tsx scripts/build.ts",
+    "build:cf": "./scripts/build-cf.sh",
     "start": "node dist/fastwd.cjs",
     "check": "tsc && cargo check",
     "format": "oxfmt && cargo fmt",
