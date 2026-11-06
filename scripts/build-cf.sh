@@ -1,4 +1,4 @@
 #!/bin/bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -- -y
 rustup target add x86_64-pc-windows-gnu x86_64-unknown-linux-musl
 pnpm build
