@@ -1,0 +1,8 @@
+[package]
+name = "fastwd"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "fastwd"
+path = "scripts/cli.rs"

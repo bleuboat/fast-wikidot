@@ -1,5 +1,2 @@
 import { defineConfig } from "oxfmt";
-
-export default defineConfig({
-  ignorePatterns: ["pnpm-lock.yaml"],
-});
+export default defineConfig({ ignorePatterns: ["pnpm-lock.yaml"] });

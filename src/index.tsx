@@ -1,9 +1,9 @@
 import { Hono } from "hono";
+import { raw } from "hono/html";
 import { serve } from "@hono/node-server";
-import { StrictMode } from "react";
-import { renderToString } from "react-dom/server";
+import open from "open";
+import api from "@/lib/api";
 import Page from "@/components/Page";
-import api from "./lib/api";
 
 const app = new Hono();
 
@@ -41,14 +41,16 @@ app.get("/*", (c) => {
       key = value;
     }
   }
-  const html = renderToString(
-    <StrictMode>
+  return c.html(
+    <>
+      {raw("<!DOCTYPE html>")}
       <Page site={site} page={page} args={args} />
-    </StrictMode>,
+    </>,
   );
-  return c.html(`<!DOCTYPE html>\n${html}`);
 });
 
 serve({ fetch: app.fetch, port: 2521 }, (info) => {
-  console.log(`Server running at http://localhost:${info.port}/`);
+  const url = `http://localhost:${info.port}/`;
+  console.log(`Server running at ${url}`);
+  if (process.env.NODE_ENV !== "development") open(url);
 });

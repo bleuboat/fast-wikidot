@@ -5,8 +5,9 @@
     "module": "Preserve",
     "moduleDetection": "force",
     "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
     "allowJs": true,
-    "types": ["node", "react"],
+    "types": ["node"],
 
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -20,7 +21,7 @@
     "noImplicitOverride": true,
 
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
 

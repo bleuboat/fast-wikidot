@@ -4,29 +4,26 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch --env-file-if-exists=.env index.tsx",
-    "build": "tsx build.ts",
-    "start": "./dist/bin/fastwd",
-    "format": "oxfmt",
+    "dev": "NODE_ENV=development tsx watch src/index.tsx",
+    "build": "tsx scripts/build.ts",
+    "start": "node dist/fastwd.cjs",
+    "check": "tsc && cargo check",
+    "format": "oxfmt && cargo fmt",
     "lint": "oxlint --fix",
-    "typecheck": "tsc",
-    "fix": "pnpm format && pnpm lint && pnpm typecheck"
+    "fix": "pnpm format && pnpm lint && pnpm check"
   },
   "dependencies": {
-    "@hono/node-server": "^2.1.5",
-    "hono": "^4.13.14",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "@hono/node-server": "^2.1.6",
+    "hono": "^4.13.16",
+    "open": "^11.0.4"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
     "esbuild": "^0.28.2",
-    "oxfmt": "^0.74.0",
-    "oxlint": "^1.90.0",
+    "oxfmt": "^0.76.0",
+    "oxlint": "^1.91.0",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
   },
-  "packageManager": "pnpm@12.15.0"
+  "packageManager": "pnpm@12.18.0"
 }
