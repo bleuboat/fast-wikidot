@@ -19,18 +19,20 @@ app.get("/*", (c) => {
   }
   const originPage = path.shift();
   if (originPage) {
-    const pageArray: string[] = [];
     let sep = false;
-    for (const char of originPage) {
-      if (/^[A-Za-z0-9]$/.test(char)) {
-        pageArray.push(char.toLocaleLowerCase());
-        sep = false;
-      } else if (!sep && /^[-_ ]$/.test(char)) {
-        pageArray.push("-");
-        sep = true;
-      }
-    }
-    page = pageArray.join("");
+    page = originPage
+      .split("")
+      .map((char, index) => {
+        if (/^[A-Za-z0-9]$/.test(char)) {
+          sep = false;
+          return char.toLocaleLowerCase();
+        } else if (!sep && /^[-_ ]$/.test(char)) {
+          sep = true;
+          return index === 0 && char === "_" ? "_" : "-";
+        }
+        return "";
+      })
+      .join("");
   }
   let key: string | undefined;
   for (const value of path) {

@@ -9,5 +9,9 @@ trim_trailing_whitespace = true
 end_of_line = lf
 max_line_length = 100
 
-[*.rs]
+[*.go]
+indent_style = tab
 indent_size = 4
+
+[template/*]
+insert_final_newline = false

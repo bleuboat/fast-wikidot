@@ -1,8 +1,9 @@
 import { build } from "esbuild";
 import { exec } from "node:child_process";
-import { copyFile, mkdir } from "node:fs/promises";
+import { copyFile, cp, mkdir } from "node:fs/promises";
 import { stat } from "node:fs/promises";
 import { promisify } from "node:util";
+import { end, start } from "./timer";
 
 const execAsync = promisify(exec);
 
@@ -14,27 +15,16 @@ function formatBytes(bytes: number): string {
 }
 
 let works: Promise<void>[] = [];
-let startTime: number | undefined;
-
-function start(tip: string): void {
-  console.log(`\ninfo: ${tip}`);
-  startTime = performance.now();
-}
-
-function end(tip: string): void {
-  if (!startTime) throw Error;
-  console.log(`\n✔ ${tip} in ${Math.round(performance.now() - startTime)}ms`);
-}
 
 function add(file: string | null, func: () => Promise<void>): Promise<void> {
   let work = func();
   if (file) {
-    file = `dist/${file}`;
+    const distFile = `dist/${file}`;
     work = work.then(async () => {
-      if (file) {
-        const size = formatBytes((await stat(file)).size);
-        console.log(`${file}${" ".repeat(30 - file.length - size.length)}${size}`);
-      }
+      const distStat = await stat(distFile);
+      if (distStat.isDirectory()) return;
+      const size = formatBytes(distStat.size);
+      console.log(`${distFile}${" ".repeat(40 - distFile.length - size.length)}${size}`);
     });
   }
   works.push(work);
@@ -44,10 +34,10 @@ function add(file: string | null, func: () => Promise<void>): Promise<void> {
 start("building...\n");
 
 await mkdir("dist", { recursive: true });
-add("fastwd.cjs", async () => {
+add("core.cjs", async () => {
   await build({
     entryPoints: ["src/index.tsx"],
-    outfile: "dist/fastwd.cjs",
+    outfile: "dist/core.cjs",
     bundle: true,
     minify: true,
     platform: "node",
@@ -59,14 +49,20 @@ add("install", async () => {
 add("install.ps1", async () => {
   await copyFile("scripts/install.ps1", "dist/install.ps1");
 });
-add("fastwd", async () => {
-  await execAsync("cargo build --release --target x86_64-unknown-linux-musl");
-  await copyFile("target/x86_64-unknown-linux-musl/release/fastwd", "dist/fastwd");
+add("template", async () => {
+  await cp("template", "dist/template", { recursive: true });
 });
-add("fastwd.exe", async () => {
-  await execAsync("cargo build --release --target x86_64-pc-windows-gnu");
-  await copyFile("target/x86_64-pc-windows-gnu/release/fastwd.exe", "dist/fastwd.exe");
-});
+
+for (const os of ["windows", "darwin", "linux"]) {
+  for (const arch of ["amd64", "arm64"]) {
+    const file = `fastwd-${os}-${arch}`;
+    add(file, async () => {
+      await execAsync(
+        `GOOS=${os} GOARCH=${arch} CGO_ENABLED=0 go build -o dist/${file} scripts/cli.go`,
+      );
+    });
+  }
+}
 
 await Promise.all(works);
 end("built");

@@ -1,0 +1,9 @@
+* [[[admin:manage|Site Manager]]]
+
+= [[size 80%]][/nav:side/edit/true Edit this menu][[/size]]
+
+[[module CSS]]
+.printuser.deleted:after, .printuser.deleted img {
+    content: "UID:"attr(data-id);
+}
+[[/module]]

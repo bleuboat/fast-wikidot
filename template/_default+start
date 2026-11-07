@@ -1,0 +1,11 @@
+[[module Clone button="Clone this site"]]
+This is a blank, minimalist template. All optional components have been removed so you can immediately start adding functionality, rather than removing the parts that you don't want.  For experienced Wikidot users.
+
+**Caution: Vandalization, including but not limited to ##red|arbitrarily editing## or ##red|file uploading##, is STRICTLY PROHIBITED.**
+[[*user Googol02]] Please, do not change it at will.
+
+++ Pages
+
+[[module ListPages category="*" pagetype="*" separate="no"]]
+%%linked_title%% ([%%link%%/edit/true Edit])
+[[/module]]
